@@ -24,19 +24,10 @@ jobs:
         env:
           NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
         run: |
-          pip install neo4j
           curl -fsSL -o seed.cypher https://raw.githubusercontent.com/graphora/graphcheck-fraud-ring-fixture/main/fixtures/fraud-ring/seed.cypher
-          python -c "
-          from neo4j import GraphDatabase
-          import os
-          driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', os.environ['NEO4J_PASSWORD']))
-          with driver.session() as session:
-              with open('seed.cypher') as f:
-                  for statement in f.read().split(';'):
-                      if statement.strip():
-                          session.run(statement)
-          driver.close()
-          "
+          curl -fsSL https://dist.neo4j.org/cypher-shell/cypher-shell_5.26.0_all.deb -o cypher-shell.deb
+          sudo dpkg -i cypher-shell.deb || sudo apt-get install -f -y
+          cypher-shell -a bolt://localhost:7687 -u neo4j -p "$NEO4J_PASSWORD" --fail-fast -f seed.cypher
       - uses: graphora/graphcheck-action@v1
         with:
           profile: ci
