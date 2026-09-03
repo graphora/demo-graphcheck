@@ -1,0 +1,16 @@
+# Connection profiles for the demo repo. `ci` is used by the GitHub Actions workflow, which
+# starts its own disposable Neo4j service container. `local` is for testing this repo yourself.
+default: ci
+profiles:
+  local:
+    uri: bolt://localhost:7687
+    user: neo4j
+    password: null
+    password_env: NEO4J_PASSWORD
+    database: neo4j
+  ci:
+    uri: bolt://localhost:7687
+    user: neo4j
+    password: null
+    password_env: NEO4J_PASSWORD
+    database: neo4j
