@@ -29,6 +29,11 @@ against it.
 4. Update `.github/workflows/graphcheck.yml` to seed or connect to your own graph instead of
    the fraud-ring fixture.
 
+## Seeing a caught failure
+
+Open a pull request against this repo — the fraud-ring fixture has known conformance issues,
+so the GraphCheck workflow will fail on purpose, showing what a caught problem looks like in CI.
+
 ## Learn more
 
 See the [GraphCheck user guide](https://github.com/graphora/graphcheck/blob/development/docs/user-guide.md)
