@@ -1,0 +1,47 @@
+name: GraphCheck
+
+on:
+  pull_request:
+
+jobs:
+  graphcheck:
+    runs-on: ubuntu-latest
+    services:
+      neo4j:
+        image: neo4j:5.26.28
+        env:
+          NEO4J_AUTH: neo4j/${{ secrets.NEO4J_PASSWORD }}
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd "wget -O /dev/null -q http://localhost:7474 || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Seed the fraud-ring fixture
+        env:
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
+        run: |
+          pip install neo4j
+          curl -fsSL -o seed.cypher https://raw.githubusercontent.com/graphora/graphcheck-fraud-ring-fixture/main/fixtures/fraud-ring/seed.cypher
+          python -c "
+          from neo4j import GraphDatabase
+          import os
+          driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', os.environ['NEO4J_PASSWORD']))
+          with driver.session() as session:
+              with open('seed.cypher') as f:
+                  for statement in f.read().split(';'):
+                      if statement.strip():
+                          session.run(statement)
+          driver.close()
+          "
+      - uses: graphora/graphcheck-action@v1
+        with:
+          profile: ci
+          uri: bolt://localhost:7687
+          user: neo4j
+          suite: fraud-ring-conformance
+        env:
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
