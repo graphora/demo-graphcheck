@@ -24,7 +24,7 @@ Before trying this yourself, see what GraphCheck's output actually looks like:
 
 1. Fork or copy this repo.
 2. Replace `checks/fraud-ring-conformance.yml` with your own check suite. See the
-   [check reference](https://github.com/graphora/graphcheck/blob/development/docs/check-reference.md)
+   [check reference](https://github.com/graphora/graphcheck/blob/development/docs/reference/checks.md)
    for the available check types.
 3. Point `profiles.yml` at your own Neo4j instance. This repo already has a working `ci`
    profile - don't run `graphcheck init` here, since it would overwrite the existing
@@ -49,5 +49,5 @@ To reproduce the red path yourself, edit `.github/workflows/graphcheck.yml` and 
 
 ## Learn more
 
-See the [GraphCheck user guide](https://github.com/graphora/graphcheck/blob/development/docs/user-guide.md)
+See the [GraphCheck user guide](https://github.com/graphora/graphcheck/blob/development/docs/guides/user-guide.md)
 for full setup, credential, and authoring instructions.
