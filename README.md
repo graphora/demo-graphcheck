@@ -26,12 +26,11 @@ Before trying this yourself, see what GraphCheck's output actually looks like:
 2. Replace `checks/fraud-ring-conformance.yml` with your own check suite. See the
    [check reference](https://github.com/graphora/graphcheck/blob/development/docs/check-reference.md)
    for the available check types.
-3. Point `profiles.yml` at your own Neo4j instance:
-```console
-   graphcheck init
-```
-   Then edit the generated `profiles.yml` to match your database's URI, user, and either an
-   inline `password` (fine for local testing) or `password_env` (recommended for CI — set the
+3. Point `profiles.yml` at your own Neo4j instance. This repo already has a working `ci`
+   profile - don't run `graphcheck init` here, since it would overwrite the existing
+   `graphcheck.yml` and `profiles.yml`. Just edit the existing `profiles.yml` to match
+   your database's URI, user, and either an inline `password` (fine for local testing) or
+   `password_env` (recommended for CI — set the
    matching value as a GitHub Actions secret).
 4. Update `.github/workflows/graphcheck.yml` to seed or connect to your own graph instead of
    the fraud-ring fixture.
