@@ -37,8 +37,15 @@ Before trying this yourself, see what GraphCheck's output actually looks like:
 
 ## Seeing a caught failure
 
-Open a pull request against this repo — the fraud-ring fixture has known conformance issues,
-so the GraphCheck workflow will fail on purpose, showing what a caught problem looks like in CI.
+Two historical PRs show both paths without you needing to reproduce them:
+
+- [PR #1](https://github.com/graphora/demo-graphcheck/pull/1) - fails on purpose, seeded with
+  the fraud-ring fixture's real conformance issues.
+- [PR #2](https://github.com/graphora/demo-graphcheck/pull/2) - passes, seeded with the
+  clean (defect-free) version of the same fixture. This is what `main` currently seeds.
+
+To reproduce the red path yourself, edit `.github/workflows/graphcheck.yml` and change
+`seed-clean.cypher` back to `seed.cypher` (both filename occurrences), then open a PR.
 
 ## Learn more
 
