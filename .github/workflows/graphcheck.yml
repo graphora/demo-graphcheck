@@ -24,10 +24,10 @@ jobs:
         env:
           NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
         run: |
-          curl -fsSL -o seed.cypher https://raw.githubusercontent.com/graphora/graphcheck-fraud-ring-fixture/main/fixtures/fraud-ring/seed.cypher
+          curl -fsSL -o seed-clean.cypher https://raw.githubusercontent.com/graphora/graphcheck-fraud-ring-fixture/main/fixtures/fraud-ring/seed-clean.cypher
           curl -fsSL https://dist.neo4j.org/cypher-shell/cypher-shell_5.26.0_all.deb -o cypher-shell.deb
           sudo dpkg -i cypher-shell.deb || sudo apt-get install -f -y
-          cypher-shell -a bolt://localhost:7687 -u neo4j -p "$NEO4J_PASSWORD" --fail-fast -f seed.cypher
+          cypher-shell -a bolt://localhost:7687 -u neo4j -p "$NEO4J_PASSWORD" --fail-fast -f seed-clean.cypher
       - uses: graphora/graphcheck-action@v1
         with:
           profile: ci
