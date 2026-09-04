@@ -24,24 +24,30 @@ Before trying this yourself, see what GraphCheck's output actually looks like:
 
 1. Fork or copy this repo.
 2. Replace `checks/fraud-ring-conformance.yml` with your own check suite. See the
-   [check reference](https://github.com/graphora/graphcheck/blob/development/docs/check-reference.md)
+   [check reference](https://github.com/graphora/graphcheck/blob/development/docs/reference/checks.md)
    for the available check types.
-3. Point `profiles.yml` at your own Neo4j instance:
-```console
-   graphcheck init
-```
-   Then edit the generated `profiles.yml` to match your database's URI, user, and either an
-   inline `password` (fine for local testing) or `password_env` (recommended for CI — set the
+3. Point `profiles.yml` at your own Neo4j instance. This repo already has a working `ci`
+   profile - don't run `graphcheck init` here, since it would overwrite the existing
+   `graphcheck.yml` and `profiles.yml`. Just edit the existing `profiles.yml` to match
+   your database's URI, user, and either an inline `password` (fine for local testing) or
+   `password_env` (recommended for CI — set the
    matching value as a GitHub Actions secret).
 4. Update `.github/workflows/graphcheck.yml` to seed or connect to your own graph instead of
    the fraud-ring fixture.
 
 ## Seeing a caught failure
 
-Open a pull request against this repo — the fraud-ring fixture has known conformance issues,
-so the GraphCheck workflow will fail on purpose, showing what a caught problem looks like in CI.
+Two historical PRs show both paths without you needing to reproduce them:
+
+- [PR #1](https://github.com/graphora/demo-graphcheck/pull/1) - fails on purpose, seeded with
+  the fraud-ring fixture's real conformance issues.
+- [PR #2](https://github.com/graphora/demo-graphcheck/pull/2) - passes, seeded with the
+  clean (defect-free) version of the same fixture. This is what `main` currently seeds.
+
+To reproduce the red path yourself, edit `.github/workflows/graphcheck.yml` and change
+`seed-clean.cypher` back to `seed.cypher` (both filename occurrences), then open a PR.
 
 ## Learn more
 
-See the [GraphCheck user guide](https://github.com/graphora/graphcheck/blob/development/docs/user-guide.md)
+See the [GraphCheck user guide](https://github.com/graphora/graphcheck/blob/development/docs/guides/user-guide.md)
 for full setup, credential, and authoring instructions.
