@@ -13,6 +13,13 @@ request. It stands up a disposable Neo4j service, seeds it with the
 known, documented conformance issues), and runs the `fraud-ring-conformance` check suite
 against it.
 
+## See a real report
+
+Before trying this yourself, see what GraphCheck's output actually looks like:
+
+- [Findings run](https://graphora.github.io/graphcheck/docs/samples/report-findings.html) - the same fraud-ring fixture this repo's failing PR catches.
+- [Clean run](https://graphora.github.io/graphcheck/docs/samples/report-clean.html) - the same defect-free data this repo's passing PR uses.
+
 ## Fork or copy this to try it on your own graph
 
 1. Fork or copy this repo.
